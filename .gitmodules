@@ -1,0 +1,3 @@
+[submodule "submodules/rearmour"]
+	path = submodules/rearmour
+	url = git@github.com:qingyichen/rearmour.git

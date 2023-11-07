@@ -786,6 +786,22 @@ files = [
 ]
 
 [[package]]
+name = "freetype-py"
+version = "2.4.0"
+description = "Freetype python bindings"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "freetype-py-2.4.0.zip", hash = "sha256:8ad81195d2f8f339aba61700cebfbd77defad149c51f59b75a2a5e37833ae12e"},
+    {file = "freetype_py-2.4.0-py3-none-macosx_10_9_universal2.whl", hash = "sha256:3e0f5a91bc812f42d98a92137e86bac4ed037a29e43dafdb76d716d5732189e8"},
+    {file = "freetype_py-2.4.0-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:c9a3abc277f5f6d21575c0093c0c6139c161bf05b91aa6258505ab27c5001c5e"},
+    {file = "freetype_py-2.4.0-py3-none-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:ce931f581d5038c4fea1f3d314254e0264e92441a5fdaef6817fe77b7bb888d3"},
+    {file = "freetype_py-2.4.0-py3-none-musllinux_1_1_aarch64.whl", hash = "sha256:c6276d92ac401c8ce02ea391fc854de413b01a8d835fb394ee5eb6f04fc947f5"},
+    {file = "freetype_py-2.4.0-py3-none-musllinux_1_1_x86_64.whl", hash = "sha256:9614f68876e9c62e821dfa811dd6160e00279d9d98cf60118cb264be48da1472"},
+    {file = "freetype_py-2.4.0-py3-none-win_amd64.whl", hash = "sha256:a2620788d4f0c00bd75fee2dfca61635ab0da856131598c96e2355d5257f70e5"},
+]
+
+[[package]]
 name = "fsspec"
 version = "2023.10.0"
 description = "File-system specification"
@@ -830,6 +846,37 @@ files = [
     {file = "idna-3.4-py3-none-any.whl", hash = "sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2"},
     {file = "idna-3.4.tar.gz", hash = "sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4"},
 ]
+
+[[package]]
+name = "imageio"
+version = "2.31.5"
+description = "Library for reading and writing a wide range of image, video, scientific, and volumetric data formats."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "imageio-2.31.5-py3-none-any.whl", hash = "sha256:97f68e12ba676f2f4b541684ed81f7f3370dc347e8321bc68ee34d37b2dbac9f"},
+    {file = "imageio-2.31.5.tar.gz", hash = "sha256:d8e53f9cd4054880276a3dac0a28c85ba7874084856a55a0294a8ae6ed7f3a8e"},
+]
+
+[package.dependencies]
+numpy = "*"
+pillow = ">=8.3.2"
+
+[package.extras]
+all-plugins = ["astropy", "av", "imageio-ffmpeg", "psutil", "tifffile"]
+all-plugins-pypy = ["av", "imageio-ffmpeg", "psutil", "tifffile"]
+build = ["wheel"]
+dev = ["black", "flake8", "fsspec[github]", "pytest", "pytest-cov"]
+docs = ["numpydoc", "pydata-sphinx-theme", "sphinx (<6)"]
+ffmpeg = ["imageio-ffmpeg", "psutil"]
+fits = ["astropy"]
+full = ["astropy", "av", "black", "flake8", "fsspec[github]", "gdal", "imageio-ffmpeg", "itk", "numpydoc", "psutil", "pydata-sphinx-theme", "pytest", "pytest-cov", "sphinx (<6)", "tifffile", "wheel"]
+gdal = ["gdal"]
+itk = ["itk"]
+linting = ["black", "flake8"]
+pyav = ["av"]
+test = ["fsspec[github]", "pytest", "pytest-cov"]
+tifffile = ["tifffile"]
 
 [[package]]
 name = "ipykernel"
@@ -2192,6 +2239,23 @@ files = [
 tests = ["pytest"]
 
 [[package]]
+name = "pycollada"
+version = "0.7.2"
+description = "python library for reading and writing collada documents"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pycollada-0.7.2.tar.gz", hash = "sha256:70a2630ed499bdab718c0e61a3e6ae3698130d7e4654e89cdecde51bfdaea56f"},
+]
+
+[package.dependencies]
+python-dateutil = ">=2.2"
+
+[package.extras]
+prettyprint = ["lxml"]
+validation = ["lxml"]
+
+[[package]]
 name = "pycparser"
 version = "2.21"
 description = "C parser in Python"
@@ -2200,6 +2264,17 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 files = [
     {file = "pycparser-2.21-py2.py3-none-any.whl", hash = "sha256:8ee45429555515e1f6b185e78100aea234072576aa43ab53aefcae078162fca9"},
     {file = "pycparser-2.21.tar.gz", hash = "sha256:e644fdec12f7872f86c58ff790da456218b10f863970249516d60a5eaca77206"},
+]
+
+[[package]]
+name = "pyglet"
+version = "2.0.9"
+description = "Cross-platform windowing and multimedia library"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pyglet-2.0.9-py3-none-any.whl", hash = "sha256:8520b22dde75f47167e1fedeed58ac0bb0c890c0dca17d8528427d6b318cd9cc"},
+    {file = "pyglet-2.0.9.zip", hash = "sha256:a0922e42f2d258505678e2f4a355c5476c1a6352c3f3a37754042ddb7e7cf72f"},
 ]
 
 [[package]]
@@ -2235,6 +2310,17 @@ files = [
 plugins = ["importlib-metadata"]
 
 [[package]]
+name = "pyopengl"
+version = "3.1.7"
+description = "Standard OpenGL bindings for Python"
+optional = false
+python-versions = "*"
+files = [
+    {file = "PyOpenGL-3.1.7-py3-none-any.whl", hash = "sha256:a6ab19cf290df6101aaf7470843a9c46207789855746399d0af92521a0a92b7a"},
+    {file = "PyOpenGL-3.1.7.tar.gz", hash = "sha256:eef31a3888e6984fd4d8e6c9961b184c9813ca82604d37fe3da80eb000a76c86"},
+]
+
+[[package]]
 name = "pyparsing"
 version = "3.1.1"
 description = "pyparsing module - Classes and methods to define and execute parsing grammars"
@@ -2247,6 +2333,33 @@ files = [
 
 [package.extras]
 diagrams = ["jinja2", "railroad-diagrams"]
+
+[[package]]
+name = "pyribbit"
+version = "0.1.46"
+description = "Easy-to-use Python renderer for 3D visualization"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pyribbit-0.1.46-py3-none-any.whl", hash = "sha256:0d4943f7cc6903f20ef42787e9357d7bb25c95f2c04da9dfa1a8021bdf9e0ab6"},
+    {file = "pyribbit-0.1.46.tar.gz", hash = "sha256:3bb7a31841549ed74c50e31415738d2494b720df825cf387501f17102299940b"},
+]
+
+[package.dependencies]
+freetype-py = "*"
+imageio = "*"
+networkx = "*"
+numpy = "*"
+Pillow = "*"
+pyglet = ">=1.4.10"
+PyOpenGL = ">=3.1.0"
+scipy = "*"
+six = "*"
+trimesh = "*"
+
+[package.extras]
+dev = ["flake8", "pre-commit", "pytest", "pytest-cov", "tox"]
+docs = ["sphinx", "sphinx-automodapi", "sphinx-rtd-theme"]
 
 [[package]]
 name = "python-dateutil"
@@ -3033,6 +3146,32 @@ files = [
 ]
 
 [[package]]
+name = "urchin"
+version = "0.0.27"
+description = "URDF parser and manipulator for Python"
+optional = false
+python-versions = "*"
+files = [
+    {file = "urchin-0.0.27-py3-none-any.whl", hash = "sha256:e4cf43c8f52a44e0075e1778b76c203922085dd1fb9340cd703bf54188208611"},
+    {file = "urchin-0.0.27.tar.gz", hash = "sha256:bda308ed7d2b80eb1e097dc3963fabe9e00a6cbd89a1f6be6f063c2a065d3671"},
+]
+
+[package.dependencies]
+lxml = "*"
+networkx = "*"
+numpy = "*"
+pillow = "*"
+pycollada = ">=0.6"
+pyribbit = ">=0.1.46"
+scipy = "*"
+six = "*"
+trimesh = "*"
+
+[package.extras]
+dev = ["flake8", "pre-commit", "pytest", "pytest-cov", "tox"]
+docs = ["sphinx", "sphinx-automodapi", "sphinx-rtd-theme"]
+
+[[package]]
 name = "urdf-parser-py"
 version = "0.0.4"
 description = "This package contains a python parser for the Unified Robot Description Format (URDF), which is an XML format for representing a robot model."
@@ -3141,7 +3280,46 @@ files = [
     {file = "widgetsnbextension-4.0.9.tar.gz", hash = "sha256:3c1f5e46dc1166dfd40a42d685e6a51396fd34ff878742a3e47c6f0cc4a2a385"},
 ]
 
+[[package]]
+name = "zonopy"
+version = "0.1.0"
+description = ""
+optional = false
+python-versions = "*"
+files = []
+develop = false
+
+[package.dependencies]
+numpy = "*"
+torch = "*"
+
+[package.source]
+type = "git"
+url = "ssh://git@github.com/roahmlab/zonopy.git"
+reference = "d07e06e534e395ef9873076adc4b160ac89da5b1"
+resolved_reference = "d07e06e534e395ef9873076adc4b160ac89da5b1"
+
+[[package]]
+name = "zonopy-robots"
+version = "0.0.1"
+description = ""
+optional = false
+python-versions = "*"
+files = []
+develop = false
+
+[package.dependencies]
+scipy = "*"
+urchin = "*"
+zonopy = "*"
+
+[package.source]
+type = "git"
+url = "ssh://git@github.com/roahmlab/zonopy-robots.git"
+reference = "2246788251304d780348e455348ed74c3fed269c"
+resolved_reference = "2246788251304d780348e455348ed74c3fed269c"
+
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.10"
-content-hash = "fe9184fe551dde4b6d2b30b8113f8822c046954c72812a43032d377530dc6ae4"
+content-hash = "166fbac2d1f6c39845f5c0e2bbc1d3ba370b2820b0259767457f2f3ede08647d"
