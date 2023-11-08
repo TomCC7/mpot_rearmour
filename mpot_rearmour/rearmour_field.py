@@ -16,6 +16,7 @@ from submodules.rearmour.distance_net.compute_vertices_from_generators import (
 )
 from mpot_rearmour.zono_utils_3d import plot3d
 import torch
+import numpy as np
 
 
 class RearmourField(PrimitiveShapeField):
@@ -32,6 +33,7 @@ class RearmourField(PrimitiveShapeField):
 
         self.obs: batchZonotope = obs
         self.dim = self.obs.dimension
+        self.render_colors = np.random.rand(self.obs.shape[0], 3)
         self.rearmour_sdf = RearmourDistanceNet(obs, tensor_args=tensor_args)
 
         super().__init__(self.dim, tensor_args=tensor_args)
@@ -56,7 +58,13 @@ class RearmourField(PrimitiveShapeField):
         assert ax.name == "3d"
         for i in range(self.obs.Z.shape[0]):
             obs_single = self.obs[i]
-            plot3d(obs_single, alpha=0.8, vertex=True, figax=(None, ax))
+            plot3d(
+                obs_single,
+                color=self.render_colors[i],
+                alpha=0.8,
+                vertex=True,
+                figax=(None, ax),
+            )
 
 
 class RearmourDistanceNet:

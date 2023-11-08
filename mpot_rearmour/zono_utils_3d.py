@@ -9,6 +9,7 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 import matplotlib.pyplot as plt
 import numpy as np
 from math import ceil
+from typing import Optional
 
 
 def reduce_box(zono: zonotope, order: float = 1.0) -> zonotope:
@@ -230,14 +231,20 @@ def decompose(zono: zonotope) -> list[zonotope]:
 
 
 def plot3d(
-    zono: zonotope, alpha: float = 1, vertex: bool = True, figax=None
+    zono: zonotope,
+    color: Optional[tuple | np.ndarray] = None,
+    alpha: float = 1,
+    vertex: bool = True,
+    figax=None,
 ) -> tuple[plt.Figure, plt.Axes]:
     """Plot a 3D zonotope.
 
-    :param zono: zonotope
-    :param alpha: opacity
-    :param vertex: whether to draw vertex
-    :param figax: figax if reused
+    Args:
+        zono (zonotope): zonotope
+        color (tuple, optional): color of the zonotope. Defaults to random colors for each face
+        alpha (float, optional): transparency of the zonotope. Defaults to 1.
+        vertex (bool, optional): whether to plot vertices. Defaults to True.
+        figax ([type], optional): figax if reused. Defaults to None.
     """
     # if not isinstance(zono, zonotope):
     #     raise TypeError("Input must be a zonotope!")
@@ -259,9 +266,14 @@ def plot3d(
     else:
         fig, ax = figax
 
+    if color is None:
+        color = np.random.rand(5, 3)
+    else:
+        assert len(color) in (3, 4), "color must be a tuple of length 3 or 4"
+        color = np.asarray(color)
     for vtx in vtx_list:
         poly = Poly3DCollection([vtx], alpha=alpha)
-        poly.set_facecolor(np.random.rand(5, 3))
+        poly.set_facecolor(color)
         ax.add_collection3d(poly)
         if vertex:
             ax.scatter(vtx[:, 0], vtx[:, 1], vtx[:, 2], c="k")
