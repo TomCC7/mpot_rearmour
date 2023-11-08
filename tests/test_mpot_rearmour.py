@@ -29,8 +29,8 @@ if __name__ == "__main__":
     tensor_args = {"device": device, "dtype": torch.float32}
 
     # ---------------------------- Environment, Robot, PlanningTask ---------------------------------
-    # TODO: armour change env
-    env = RearmourEnv()
+    obs = torch.tensor([[[0.5, 0, 0], [0.1, 0, 0], [0, 0.1, 0], [0, 0, 0.1]]])
+    env = RearmourEnv(obs)
 
     # NOTE: not really using panda...
     robot = RobotPanda(use_self_collision_storm=False, tensor_args=tensor_args)
