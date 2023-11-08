@@ -3,6 +3,7 @@ from pathlib import Path
 import os
 import time
 import torch
+from matplotlib import pyplot as plt
 
 from mpot.ot.problem import Epsilon
 from mpot.ot.sinkhorn import Sinkhorn
@@ -18,6 +19,7 @@ from torch_robotics.torch_utils.seed import fix_random_seed
 from torch_robotics.torch_utils.torch_timer import TimerCUDA
 from torch_robotics.torch_utils.torch_utils import get_torch_device
 from torch_robotics.visualizers.planning_visualizer import PlanningVisualizer
+
 
 if __name__ == "__main__":
     base_file_name = Path(os.path.basename(__file__)).stem

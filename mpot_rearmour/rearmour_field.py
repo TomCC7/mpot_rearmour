@@ -14,6 +14,7 @@ from submodules.rearmour.distance_net.distance_and_gradient_net import (
 from submodules.rearmour.distance_net.compute_vertices_from_generators import (
     compute_edges_from_generators,
 )
+from mpot_rearmour.zono_utils_3d import plot3d
 import torch
 
 
@@ -51,8 +52,11 @@ class RearmourField(PrimitiveShapeField):
         # Adds obstacle to an occupancy grid
         raise NotImplementedError
 
-    def render(self, ax, pos=None, ori=None, color=None, **kwargs):
-        raise NotImplementedError
+    def render(self, ax, pos=None, ori=None, color="gray", cmap="gray", **kwargs):
+        assert ax.name == "3d"
+        for i in range(self.obs.Z.shape[0]):
+            obs_single = self.obs[i]
+            plot3d(obs_single, alpha=0.8, vertex=True, figax=(None, ax))
 
 
 class RearmourDistanceNet:
