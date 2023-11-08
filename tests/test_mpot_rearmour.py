@@ -27,10 +27,11 @@ if __name__ == "__main__":
 
     device = get_torch_device()
     tensor_args = {"device": device, "dtype": torch.float32}
+    print(f"Using device: {device}")
 
     # ---------------------------- Environment, Robot, PlanningTask ---------------------------------
     obs = torch.tensor([[[0.5, 0, 0], [0.1, 0, 0], [0, 0.1, 0], [0, 0, 0.1]]])
-    env = RearmourEnv(obs)
+    env = RearmourEnv(obs, tensor_args=tensor_args)
 
     # NOTE: not really using panda...
     robot = RobotPanda(use_self_collision_storm=False, tensor_args=tensor_args)

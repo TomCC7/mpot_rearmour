@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+"""Rearmour environment implementation following torch_robotics
+
+author: C.C
+date: 2023-11-07
+"""
 from torch_robotics.environments.env_base import EnvBase
 from mpot_rearmour.rearmour_field import RearmourField
 from torch_robotics.environments.primitives import ObjectField
