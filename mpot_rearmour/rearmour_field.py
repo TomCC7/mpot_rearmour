@@ -90,10 +90,8 @@ class RearmourDistanceNet:
 
         # hyperplanes and vertices
         combs = self._generate_combinations_upto(max_combs)
-        hyperplanes_A, hyperplanes_b = self.obs.polytope(combs)
-        hyperplanes_b = hyperplanes_b.unsqueeze(-1)
-        self.hyperplanes_A: torch.Tensor = hyperplanes_A.to(self.tensor_args["device"])
-        self.hyperplanes_b: torch.Tensor = hyperplanes_b.to(self.tensor_args["device"])
+        self.hyperplanes_A, self.hyperplanes_b = self.obs.polytope(combs)
+        self.hyperplanes_b = self.hyperplanes_b.unsqueeze(-1)
         self.v1, self.v2 = compute_edges_from_generators(
             self.obs.Z[..., 0:1, :],
             self.obs.Z[..., 1:, :],

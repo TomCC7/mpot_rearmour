@@ -141,6 +141,7 @@ def decompose(zono: zonotope) -> list[zonotope]:
     #     raise TypeError("Input must be a zonotope!")
 
     dim = zono.dimension
+    zono = zono.cpu()
 
     if dim != 3:
         raise NotImplementedError("This function is only implemented for 3D zonotopes!")
@@ -252,6 +253,7 @@ def plot3d(
     if zono.dimension != 3:
         raise NotImplementedError("This function is only implemented for 3D zonotopes!")
 
+    zono = zono.cpu()
     # faces
     faces = decompose(zono)
 

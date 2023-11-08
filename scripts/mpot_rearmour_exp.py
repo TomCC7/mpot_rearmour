@@ -21,16 +21,16 @@ from torch_robotics.torch_utils.torch_timer import TimerCUDA
 from torch_robotics.torch_utils.torch_utils import get_torch_device
 from torch_robotics.visualizers.planning_visualizer import PlanningVisualizer
 
-csv_path: str = "./submodules/rearmour/kinova_rdf_scenarios/scene_001.csv"
+csv_path: str = "./submodules/rearmour/kinova_rdf_scenarios/scene_001_test.csv"
+exp_name: str = os.path.basename(csv_path).removesuffix(".csv")
 
 if __name__ == "__main__":
-    base_file_name = Path(os.path.basename(__file__)).stem
-
     seed = int(time.time())
     fix_random_seed(seed)
 
     device = get_torch_device()
     tensor_args = {"device": device, "dtype": torch.float32}
+    print(f"running experiment: {exp_name}")
     print(f"Using device: {device}")
 
     # ---------------------------- Read csv file ---------------------------------
@@ -196,6 +196,12 @@ if __name__ == "__main__":
     pos_trajs_iters = robot.get_position(traj_history)
     trajs = trajs.flatten(0, 1)
     trajs_coll, trajs_free = task.get_trajs_collision_and_free(trajs)
+    if trajs_coll is None:
+        trajs_coll = []
+    if trajs_free is None:
+        trajs_free = []
+
+    print(f"free/collision: {len(trajs_free)}/{len(trajs_coll)}")
 
     planner_visualizer.animate_opt_iters_joint_space_state(
         trajs=traj_history,
@@ -203,21 +209,34 @@ if __name__ == "__main__":
         pos_goal_state=goal_state,
         vel_start_state=torch.zeros_like(start_state),
         vel_goal_state=torch.zeros_like(goal_state),
-        video_filepath=f"{base_file_name}-joint-space-opt-iters.mp4",
+        video_filepath=f"results/{exp_name}-joint-space-opt-iters.mp4",
         n_frames=max((2, opt_iters // 2)),
         anim_time=5,
     )
 
-    if trajs_free is not None:
+    if len(trajs_free) != 0:
         planner_visualizer.animate_robot_trajectories(
             trajs=trajs_free,
             start_state=start_state,
             goal_state=goal_state,
             plot_trajs=False,
             draw_links_spheres=False,
-            video_filepath=f"{base_file_name}-robot-traj.mp4",
+            video_filepath=f"results/{exp_name}-robot-traj.mp4",
             # n_frames=max((2, pos_trajs_iters[-1].shape[1]//10)),
             n_frames=trajs_free.shape[-2],
+            anim_time=duration,
+        )
+
+    if len(trajs_free) == 0 and len(trajs_coll) != 0:
+        planner_visualizer.animate_robot_trajectories(
+            trajs=trajs_coll,
+            start_state=start_state,
+            goal_state=goal_state,
+            plot_trajs=False,
+            draw_links_spheres=False,
+            video_filepath=f"results/{exp_name}-robot-traj_coll.mp4",
+            # n_frames=max((2, pos_trajs_iters[-1].shape[1]//10)),
+            n_frames=trajs_coll.shape[-2],
             anim_time=duration,
         )
 

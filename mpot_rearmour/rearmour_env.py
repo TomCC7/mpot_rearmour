@@ -12,7 +12,12 @@ import torch
 
 class RearmourEnv(EnvBase):
     def __init__(
-        self, obs: torch.Tensor, name="rearmour_env", tensor_args=None, **kwargs
+        self,
+        obs: torch.Tensor,
+        name="rearmour_env",
+        limits: float = 1,
+        tensor_args=None,
+        **kwargs
     ):
         self.tensor_args = (
             tensor_args
@@ -22,11 +27,11 @@ class RearmourEnv(EnvBase):
         rearmour_field = RearmourField(obs, tensor_args=tensor_args)
         obj_field = ObjectField([rearmour_field], "rearmour_zonotopes")
         obj_list = [obj_field]
+        limits = torch.ones((2, 3), **self.tensor_args) * limits
+        limits[0, :] *= -1
         super().__init__(
             name=name,
-            limits=torch.tensor(
-                [[-1, -1, -1], [1, 1, 1]], **self.tensor_args
-            ),  # environments limits
+            limits=limits,  # environments limits
             obj_fixed_list=obj_list,
             tensor_args=tensor_args,
             **kwargs
