@@ -33,7 +33,7 @@ class RearmourField(PrimitiveShapeField):
 
         self.obs: batchZonotope = obs
         self.dim = self.obs.dimension
-        self.render_colors = np.random.rand(self.obs.shape[0], 3)
+        self.render_colors = np.random.rand(self.obs.batch_shape[0], 3)
         self.rearmour_sdf = RearmourDistanceNet(obs, tensor_args=tensor_args)
 
         super().__init__(self.dim, tensor_args=tensor_args)
