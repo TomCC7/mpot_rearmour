@@ -11,8 +11,6 @@ from mpot.ot.sinkhorn import Sinkhorn
 from mpot.planner import MPOT
 from mpot.costs import CostGPHolonomic, CostField, CostComposite
 from mpot_rearmour.rearmour_env import RearmourEnv
-from submodules.rearmour.planning.rearmour_3d_urdf import REARMOUR_3D_planner
-import submodules.rearmour.environments.robots.robot as robot2
 
 from torch_robotics.robots.robot_panda import RobotPanda
 from torch_robotics.tasks.tasks import PlanningTask
@@ -48,11 +46,12 @@ if __name__ == "__main__":
 
 
     # ---------------------------- Environment, Robot, PlanningTask ---------------------------------
+    torch.cuda.memory._record_memory_history()
+
     env = RearmourEnv(obs, tensor_args=tensor_args)
 
     # NOTE: not really using panda...
     robot = RobotPanda(use_self_collision_storm=False, tensor_args=tensor_args)
-    zono_rob = robot2.ZonoArmRobot.load("assets/panda_arm/panda_arm.urdf")
 
     # TODO: armour change task(? maybe change env is enough)
     task = PlanningTask(
@@ -187,6 +186,8 @@ if __name__ == "__main__":
     print(
         f"Average Sinkhorn Iterations: {sinkhorn_iters.mean():.2f}, min: {sinkhorn_iters.min():.2f}, max: {sinkhorn_iters.max():.2f}"
     )
+
+    torch.cuda.memory._dump_snapshot("my_snapshot.pickle")
 
     # -------------------------------- Visualize ---------------------------------
     planner_visualizer = PlanningVisualizer(task=task, planner=planner)

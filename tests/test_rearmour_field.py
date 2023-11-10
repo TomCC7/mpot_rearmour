@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from submodules.rearmour.reachability.conSet import batchZonotope
+from zonopy import batchZonotope
 from mpot_rearmour.rearmour_field import RearmourField
 import torch
 

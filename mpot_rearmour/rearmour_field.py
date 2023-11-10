@@ -6,10 +6,9 @@ date: 2023-11-07
 """
 from torch_robotics.environments.primitives import PrimitiveShapeField
 
-# from zonopy import batchZonotope # TODO: are they different?
-from submodules.rearmour.reachability.conSet import batchZonotope
-from submodules.rearmour.distance_net.distance_and_gradient_net import (
-    DistanceGradientNet,
+from zonopy import batchZonotope
+from submodules.rearmour.distance_net.batched_distance_and_gradient_net import (
+    BatchedDistanceGradientNet,
 )
 from submodules.rearmour.distance_net.compute_vertices_from_generators import (
     compute_edges_from_generators,
@@ -85,7 +84,7 @@ class RearmourDistanceNet:
 
         self.obs: batchZonotope = obs.to(**tensor_args)
         self.num_obs: int = self.obs.batch_shape[0]
-        self.distance_net = DistanceGradientNet()
+        self.distance_net = BatchedDistanceGradientNet()
         self.distance_net.to(self.tensor_args["device"])
 
         # hyperplanes and vertices
@@ -98,6 +97,7 @@ class RearmourDistanceNet:
             self.hyperplanes_A,
             self.hyperplanes_b,
         )
+        self.hyperplanes_b = self.hyperplanes_b.squeeze(-1)
 
     def __call__(self, x: torch.Tensor) -> torch.Tensor:
         """Compute the signed distance
@@ -110,24 +110,16 @@ class RearmourDistanceNet:
                     signed distance between inputs and nearest obstacle
         """
         assert self.dim == x.shape[-1]
-        # flatten
-        shape_orig = x.shape[:-1]
-        x = x.view(-1, self.dim)
+        with torch.no_grad():
+            # flatten
+            shape_orig = x.shape[:-1]
+            x = x.view(-1, self.dim)
 
-        # transpose to (num_obs * num_points, ...)
-        num_points = x.shape[0]
-        x = x.repeat(self.num_obs, 1)
-        hyperplanes_A = self.hyperplanes_A.repeat_interleave(num_points, 0)
-        hyperplanes_b = self.hyperplanes_b.repeat_interleave(num_points, 0)
-        v1 = self.v1.repeat_interleave(num_points, 0)
-        v2 = self.v2.repeat_interleave(num_points, 0)
-        distances, _ = self.distance_net(x, hyperplanes_A, hyperplanes_b, v1, v2)
+            distances, _ = self.distance_net(
+                x, self.hyperplanes_A, self.hyperplanes_b, self.v1, self.v2
+            )
 
-        return (
-            distances.reshape(self.num_obs, num_points)
-            .min(dim=0)
-            .values.view(*shape_orig)
-        )
+        return distances.min(dim=1).values.view(*shape_orig)
 
     def _generate_combinations_upto(self, max_combs):
         return [
