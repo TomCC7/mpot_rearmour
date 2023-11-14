@@ -8,6 +8,7 @@ import numpy as np
 from mpot_rearmour.utils import get_urdf_path
 from torch_robotics.torch_kinematics_tree.models.robot_tree import DifferentiableTree
 from torch_robotics.robots.robot_base import RobotBase
+from torch_robotics.environments.primitives import ObjectField, MultiSphereField
 from torch_robotics.torch_kinematics_tree.geometrics.frame import Frame
 from torch_robotics.torch_kinematics_tree.geometrics.quaternion import q_convert_wxyz
 from torch_robotics.torch_kinematics_tree.geometrics.skeleton import (
@@ -51,8 +52,8 @@ class RobotGen3(RobotBase):
         q_limits = torch.from_numpy(np.array([self.jl_lower, self.jl_upper])).to(
             **tensor_args
         )
-        q_limits[0, [0, 2, 4, 6]] = -np.pi
-        q_limits[1, [0, 2, 4, 6]] = np.pi
+        # q_limits[0, [0, 2, 4, 6]] = -np.pi
+        # q_limits[1, [0, 2, 4, 6]] = np.pi
 
         # collision model
         link_names_for_object_collision_checking = [
@@ -71,12 +72,12 @@ class RobotGen3(RobotBase):
         link_margins_for_object_collision_checking = [
             # 0.1,
             # 0.1,
-            0.125,
-            0.125,
-            0.075,
-            0.13,
-            0.1,
-            0.1,
+            0.0125,
+            0.0125,
+            0.0075,
+            0.013,
+            0.01,
+            0.01,
             # 0.08,
         ]
         assert len(link_names_for_object_collision_checking) == len(
@@ -220,7 +221,7 @@ class RobotGen3(RobotBase):
         arrow_length=0.15,
         arrow_alpha=1.0,
         arrow_linewidth=2.0,
-        draw_links_spheres=False,
+        draw_links_spheres=True,
         **kwargs
     ):
         # draw skeleton
@@ -250,7 +251,7 @@ class RobotGen3(RobotBase):
                 ),
                 tensor_args=self.tensor_args,
             )
-            spheres.render(ax, color="red", cmap="Reds", **kwargs)
+            spheres.render(ax, **kwargs)
 
         # draw EE frame
         frame_EE = fks_dict[self.link_name_ee]

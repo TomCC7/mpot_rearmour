@@ -3046,9 +3046,9 @@ urdf-parser-py = "*"
 
 [package.source]
 type = "git"
-url = "https://github.com/anindex/torch_robotics"
+url = "https://github.com/TomCC7/torch_robotics"
 reference = "HEAD"
-resolved_reference = "68d28399ff67f34ca3be0130acdc7cba2fabd61b"
+resolved_reference = "ed1cd03ba24c51682caa99025c1bc9547bdc9dff"
 
 [[package]]
 name = "tornado"
@@ -3342,4 +3342,4 @@ resolved_reference = "2246788251304d780348e455348ed74c3fed269c"
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.10"
-content-hash = "59418115abed265b546cafc37fad6900a1f14be8e7dccfb09ee673e1792c0af3"
+content-hash = "a2d299cf2012fd05cecd9b01787432826f8adb552bf642777cb3c1ef9dfbc518"

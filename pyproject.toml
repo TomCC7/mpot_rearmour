@@ -17,7 +17,7 @@ einops = "^0.7.0"
 jedi-language-server = "^0.41.1"
 jupyter = "^1.0.0"
 black = "^23.10.1"
-torch-robotics = {git = "https://github.com/anindex/torch_robotics"}
+torch-robotics = {git = "https://github.com/TomCC7/torch_robotics"}
 zonopy = {git = "ssh://git@github.com/roahmlab/zonopy.git", rev = "d07e06e534e395ef9873076adc4b160ac89da5b1"}
 zonopy-robots = {git = "ssh://git@github.com/roahmlab/zonopy-robots.git", rev = "2246788251304d780348e455348ed74c3fed269c"}
 tqdm = "^4.66.1"

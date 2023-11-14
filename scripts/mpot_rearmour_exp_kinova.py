@@ -19,7 +19,7 @@ from torch_robotics.torch_utils.torch_timer import TimerCUDA
 from torch_robotics.torch_utils.torch_utils import get_torch_device
 from torch_robotics.visualizers.planning_visualizer import PlanningVisualizer
 
-csv_path: str = "./submodules/rearmour/kinova_rdf_scenarios/scene_002.csv"
+csv_path: str = "./submodules/rearmour/kinova_rdf_scenarios/scene_003.csv"
 exp_name: str = os.path.basename(csv_path).removesuffix(".csv")
 
 if __name__ == "__main__":
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     goal_state = torch.from_numpy(settings[1, :]).to(**tensor_args)
     obs_settings = torch.from_numpy(settings[3:, :-1]).to(**tensor_args)
     obs = torch.cat(
-        [obs_settings[:, :3].unsqueeze(1), torch.diag_embed(obs_settings[:, 3:])],
+        [obs_settings[:, :3].unsqueeze(1), torch.diag_embed(obs_settings[:, 3:]) / 2],
         dim=1,
     )
     print("Start state: ", start_state)
@@ -46,7 +46,7 @@ if __name__ == "__main__":
 
 
     # ---------------------------- Environment, Robot, PlanningTask ---------------------------------
-    torch.cuda.memory._record_memory_history()
+    # torch.cuda.memory._record_memory_history()
 
     env = RearmourEnv(obs, tensor_args=tensor_args)
 
@@ -104,7 +104,7 @@ if __name__ == "__main__":
         0.5  # for controlling the initial GP variance: Q0_c = sigma_gp_init^2 * I
     )
     max_inner_iters = 100  # max inner iterations for Sinkhorn-Knopp
-    max_outer_iters = 40  # max outer iterations for MPOT
+    max_outer_iters = 100  # max outer iterations for MPOT
 
     # --------------------------------- Cost function ---------------------------------
 
@@ -187,7 +187,7 @@ if __name__ == "__main__":
         f"Average Sinkhorn Iterations: {sinkhorn_iters.mean():.2f}, min: {sinkhorn_iters.min():.2f}, max: {sinkhorn_iters.max():.2f}"
     )
 
-    torch.cuda.memory._dump_snapshot("my_snapshot.pickle")
+    # torch.cuda.memory._dump_snapshot("my_snapshot.pickle")
 
     # -------------------------------- Visualize ---------------------------------
     planner_visualizer = PlanningVisualizer(task=task, planner=planner)
