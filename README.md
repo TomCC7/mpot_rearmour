@@ -1,3 +1,20 @@
+# Install
+Install [poetry](https://python-poetry.org/) 
+``` shell
+git clone https://github.com/TomCC7/mpot_rearmour && cd mpot_rearmour
+git submodule update --init
+poetry install
+poetry shell
+pip install torch
+```
+
+run script
+``` shell
+python scripts/mpot_rearmour_exp_kinova.py
+```
+
+
+# Original README
 # Accelerating Motion Planning via Optimal Transport
 
 This repository implements Motion Planning via Optimal Transport `mpot` in PyTorch. 
